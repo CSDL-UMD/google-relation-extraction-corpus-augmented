@@ -14,16 +14,8 @@ import argparse
 import datetime
 import logging
 
-'''
-Future Improvements:
-
-->Anonymize for github gist
-->Find Source for Freebase KG instead of Google KG
-'''
 
 # Argument parser
-
-
 def arg_parse(arg_list=None):
     now = datetime.datetime.now().strftime("%b-%d-%y")
     parser = argparse.ArgumentParser(
