@@ -134,11 +134,11 @@ def get_relation_type(json_filename):
         return "education"
     elif "institution" in json_filename:
         return "institution"
-    elif "date_of_birth" in json_filename:
+    elif "date_of_birth" in json_filename or 'dob' in json_filename:
         return "dob"
-    elif "place_of_birth" in json_filename:
+    elif "place_of_birth" in json_filename or 'pob' in json_filename:
         return "pob"
-    elif "place_of_death" in json_filename:
+    elif "place_of_death" in json_filename or 'pod' in json_filename:
         return "pod"
     else:
         return "Error"
