@@ -70,25 +70,25 @@ def arg_parse(arg_list=None):
         '--in-dir',
         '-id',
         dest='source_dir',
-        help='Input Directory Path',
+        help='Input Directory Path, default ./',
         type=str,
-        default='../../../data/raw/google-relation-extraction-corpus-db/'
+        default='./'
     )
     # Save Directory
     parser.add_argument(
         '--out-dir',
         '-od',
         dest='save_dir',
-        help='Output Directory Path',
+        help='Output Directory Path, default ./',
         type=str,
-        default='../../../data/interim/grc_processed/'
+        default='./'
     )
     # Save Filename Tag
     parser.add_argument(
         '--output',
         '-o',
         dest='output_tag',
-        help='Tag to append to Output Files',
+        help='Tag to append to Output Files, default <filename>-augment_MM-DD-YY.json',
         type=str,
         default='-augment' + "_" + now
     )
