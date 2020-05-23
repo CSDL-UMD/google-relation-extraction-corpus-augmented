@@ -13,6 +13,8 @@ import unicodedata
 import argparse
 import datetime
 import logging
+import requests
+import xml.etree.ElementTree as ET
 
 
 # Argument parser
@@ -65,6 +67,15 @@ def arg_parse(arg_list=None):
         action='store_true',
         default=False
     )
+    # Pull DBPedia References
+    parser.add_argument(
+        '--dbpedia',
+        '-db',
+        dest='dbpedia',
+        help='Find DBpedia reference URIs',
+        action='store_true',
+        default=False
+    )
     # Source Directory
     parser.add_argument(
         '--in-dir',
@@ -100,7 +111,7 @@ def arg_parse(arg_list=None):
 
 # Google KG API Extraction
 
-def get_entity(id, path_to_key):
+def get_entity(id, path_to_key, subject=None):
     api_key = open(path_to_key).read()
     service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
     params = {
@@ -108,13 +119,22 @@ def get_entity(id, path_to_key):
         'key': api_key
     }
     url = service_url + '?' + parse.urlencode(params)
+
     try:
         response = json.loads(request.urlopen(url).read())
         print(response)
         return response['itemListElement'][0]['result']['name']
-    except error.HTTPError as err:
-        raise
-
+    except:
+        logging.error("Freebase ID not found in Google Knowledge Graph API")
+        if subject is not None:
+            logging.info('Using Wikipedia evidence URL for subject extraction')
+            try:
+                return ' '.join(subject.split('/')[-1].split('_')).replace('.', '').replace(',', '')
+            except:
+                logging.error("Wikipedia URL extraction failed.")
+                raise
+        else:
+            raise
 
 def get_json(json_file, json_bool):
     """Returns contents of json_file as json object
@@ -180,6 +200,13 @@ def tally_votes(relation):
     else:
         return 'skip'
 
+def find_dbpedia(entity):
+    try:
+        response = requests.get(f"http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?QueryString='{entity}'")
+        parsed = ET.fromstring(response.content)
+        return parsed[0][1].text
+    except:
+        raise
 
 def main():
 
@@ -200,6 +227,7 @@ def main():
     source_dir = args.source_dir
     save_dir = args.save_dir
     uni_to_ascii = args.uni_to_ascii
+    dbpedia = args.dbpedia
     output_tag = args.output_tag
 
     google_kg = args.google_kg
@@ -234,24 +262,33 @@ def main():
                 if majority_vote:
                     relation['maj_vote'] = tally_votes(relation)
                 if google_kg:
+                    evidence = relation['evidences'][0]['url']
+                    relation['sub_id'] = relation['sub']
+                    relation['obj_id'] = relation['obj']
                     try:
                         relation['sub'] = get_entity(
-                            relation['sub'], google_api_key)
+                            relation['sub_id'], google_api_key, subject=evidence)
                     except:
                         logging.error(relation['UID'] + \
                                       "failed to fetch subject")
-                        relation['sub'] = relation['sub'] + \
-                            ' / ' + "needs_entry"
+                        relation['sub'] = "needs_entry"
                     if relation_type is not 'dob':
                         try:
                             relation['obj'] = get_entity(
-                                relation['obj'], google_api_key)
+                                relation['obj_id'], google_api_key)
                         except:
                             logging.error(
                                 relation['UID'] + "failed to fetch object")
-                            relation['obj'] = relation['obj'] + \
-                                ' / ' + "needs_entry"
-
+                            relation['obj'] = "needs_entry"
+                if dbpedia:
+                    try:
+                        relation['dbpedia_sub'] = find_dbpedia(relation['sub'])
+                    except:
+                        pass
+                    try:
+                        relation['dbpedia_obj'] = find_dbpedia(relation['obj'])
+                    except:
+                        pass
             out_filename = relation_type + output_tag + '.json'
             out_filepath = save_dir + out_filename
 
