@@ -2,6 +2,8 @@
 
 '''
 Script to Augment the Raw Google Relation Extraction Corpus (https://ai.googleblog.com/2013/04/50000-lessons-on-how-to-read-relation.html)
+Author: Matthew Sumpter
+matthewsumpter.org
 '''
 
 import json
