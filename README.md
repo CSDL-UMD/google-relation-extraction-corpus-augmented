@@ -22,7 +22,7 @@ This is a fairly robust dataset for building out relation extraction solutions, 
 ## Data Structure
 **Changes from original dataset are bolded**
 
-Each dataset is a **properly-formatted**  JSON file. Each example has the following properties:
+Each dataset is a **properly-formatted**  JSON file (was previously a .ndjson). **Each snippet was converted from unicode to ASCII** Each example has the following properties:
 
 +_pred_: Freebase label for predicate. Unaltered, as the files are divided this way, and every item will have the same tag
 
