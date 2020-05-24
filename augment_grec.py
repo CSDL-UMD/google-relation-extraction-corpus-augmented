@@ -136,7 +136,7 @@ def get_entity(id, path_to_key, subject=None):
         else:
             raise
 
-def get_json(json_file, json_bool):
+def get_json(json_file, json_bool=False):
     """Returns contents of json_file as json object
 
     Arguments:
@@ -206,7 +206,7 @@ def find_dbpedia(entity):
         parsed = ET.fromstring(response.content)
         return parsed[0][1].text
     except:
-        raise
+        return "Not Found"
 
 def main():
 
@@ -281,14 +281,8 @@ def main():
                                 relation['UID'] + "failed to fetch object")
                             relation['obj'] = "needs_entry"
                 if dbpedia:
-                    try:
-                        relation['dbpedia_sub'] = find_dbpedia(relation['sub'])
-                    except:
-                        pass
-                    try:
-                        relation['dbpedia_obj'] = find_dbpedia(relation['obj'])
-                    except:
-                        pass
+                    relation['dbpedia_sub'] = find_dbpedia(relation['sub'])
+                    relation['dbpedia_obj'] = find_dbpedia(relation['obj'])
             out_filename = relation_type + output_tag + '.json'
             out_filepath = save_dir + out_filename
 
