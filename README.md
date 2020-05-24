@@ -8,8 +8,11 @@ This is a fairly robust dataset for building out relation extraction solutions, 
 ## Files
 
 +**dob-augment-.json** : SUBJECT was born on OBJECT (date)
+
 +**pob-augment-.json** : SUBJECT was born in OBJECT (location)
+
 +**pod-augment-.json** : SUBJECT died in OBJECT (location)
+
 +**education-augment-.json** : SUBJECT received OBJECT (Degree)
 +**institution-augment-.json** : SUBJECT attended OBJECT (university)
 +**augment_grec.py**: The script used to augment the original dataset
