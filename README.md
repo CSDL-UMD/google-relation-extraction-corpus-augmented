@@ -7,7 +7,7 @@ This is a fairly robust dataset for building out relation extraction solutions, 
 
 ## Files
 
-+**dob-augment-.json** : SUBJECT was born on OBJECT (date)
+* **dob-augment-.json** : SUBJECT was born on OBJECT (date)
 
 +**pob-augment-.json** : SUBJECT was born in OBJECT (location)
 
