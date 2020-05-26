@@ -5,6 +5,88 @@
 
 This is a fairly robust dataset for building out relation extraction solutions, but was somewhat out of date. I've added (and will continue adding) additional properties to the .json objects to make future use of this dataset more useful. 
 
+### Before
+```
+{
+    "pred":"/people/person/education./education/education/institution",
+    "sub":"/m/056h7f",
+    "obj":"/m/0lk0l",
+    "evidences":[
+            {
+            "url":"http://en.wikipedia.org/wiki/Charles_Mantoux",
+            "snippet":"He graduated from the University of Paris where he studied under Broca. For health reasons he relocated to Cannes but continued to work in Paris during the long vacation periods granted to patients in sanatoriums."
+            }
+        ],
+        "judgments":[
+            {
+                "rater":"16671464637895630418",
+                "judgment":"yes"
+            },
+            {
+                "rater":"18153321702395861849",
+                "judgment":"yes"
+            },
+            {
+                "rater":"6570687721363324718",
+                "judgment":"yes"
+            },
+            {
+                "rater":"1295059937994543754",
+                "judgment":"yes"
+            },
+            {
+                "rater":"12022408018620867151",
+                "judgment":"yes"
+            }
+        ]
+}
+```
+
+### After
+```
+{
+    "pred": "/people/person/education./education/education/institution",
+    "sub": "Charles Mantoux",
+    "obj": "University of Paris",
+    "evidences": [
+      {
+        "url": "http://en.wikipedia.org/wiki/Charles_Mantoux",
+        "snippet": "He graduated from the University of Paris where he studied under Broca. For health reasons he relocated to Cannes but continued to work in Paris during the long vacation periods granted to patients in sanatoriums."
+      }
+    ],
+    "judgments": [
+      {
+        "rater": "16671464637895630418",
+        "judgment": "yes"
+      },
+      {
+        "rater": "18153321702395861849",
+        "judgment": "yes"
+      },
+      {
+        "rater": "6570687721363324718",
+        "judgment": "yes"
+      },
+      {
+        "rater": "1295059937994543754",
+        "judgment": "yes"
+      },
+      {
+        "rater": "12022408018620867151",
+        "judgment": "yes"
+      }
+    ],
+    "UID": "i_PX5AbGVlRD",
+    "maj_vote": "yes",
+    "sub_id": "/m/056h7f",
+    "obj_id": "/m/0lk0l",
+    "dbpedia_sub": "http://dbpedia.org/resource/Charles_Mantoux",
+    "dbpedia_obj": "http://dbpedia.org/resource/University_of_Paris",
+    "wikidata_qid_sub": "Q924088",
+    "wikidata_qid_obj": "Q209842"
+}
+```
+
 ## Files
 
 * **dob-augment-.json** : SUBJECT was born on OBJECT (date)
