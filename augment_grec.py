@@ -78,6 +78,15 @@ def arg_parse(arg_list=None):
         action='store_true',
         default=False
     )
+    # Pull Wikidata QIDs
+    parser.add_argument(
+        '--wikidata',
+        '-wd',
+        dest='wikidata',
+        help='Find Wikidata QIDs',
+        action='store_true',
+        default=False
+    )
     # Source Directory
     parser.add_argument(
         '--in-dir',
@@ -210,6 +219,18 @@ def find_dbpedia(entity):
     except:
         return "Not Found"
 
+def get_wikidata_qid(entity):
+    qid = 'Not Found'
+    try:
+        response = requests.get(f"https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&format=json&titles={entity}")
+        response_json = response.json()
+        for entry in response_json['query']['pages']:
+            qid = response_json['query']['pages'][entry]['pageprops']['wikibase_item']
+            break
+    except:
+        pass
+    return qid
+
 def main():
 
     ### Initialize Logger ###
@@ -230,6 +251,7 @@ def main():
     save_dir = args.save_dir
     uni_to_ascii = args.uni_to_ascii
     dbpedia = args.dbpedia
+    wikidata = args.wikidata
     output_tag = args.output_tag
 
     google_kg = args.google_kg
@@ -285,6 +307,9 @@ def main():
                 if dbpedia:
                     relation['dbpedia_sub'] = find_dbpedia(relation['sub'])
                     relation['dbpedia_obj'] = find_dbpedia(relation['obj'])
+                if wikidata:
+                    relation['wikidata_qid_sub'] = get_wikidata_qid(relation['sub'])
+                    relation['wikidata_qid_obj'] = get_wikidata_qid(relation['obj'])
             out_filename = relation_type + output_tag + '.json'
             out_filepath = save_dir + out_filename
 

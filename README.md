@@ -54,6 +54,10 @@ Each dataset is a **properly-formatted**  JSON file (was previously a .ndjson). 
 
 * ***dbpedia_obj***: The DBPedia URI relation to the object
 
+* ***wikidata_qid_sub***: The Wikidata QID relating to the subject
+
+* ***wikidata_qid_obj***: The Wikidata QID relating to the object
+
 ## Things to be done
 
 * Some objects and subjects have not been matched to a string (the above methods failed). In this case, _sub_ and _obj_ will have the original Freebase MID, followed by "/ needs_entry"
