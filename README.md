@@ -60,8 +60,8 @@ Each dataset is a **properly-formatted**  JSON file (was previously a .ndjson). 
 
 ## Things to be done
 
-* Some objects and subjects have not been matched to a string (the above methods failed). In this case, _sub_ and _obj_ will have the original Freebase MID, followed by "/ needs_entry"
+* Some object and subject MIDs have not been matched to a string (the above methods failed). In this case, _sub_ and _obj_ will have the original Freebase MID, followed by "/ needs_entry"
 
 * Some dbpedia URIs were not found. Date of Birth items do not have a DBPedia URI. All others should have a valid mapping, but currently _dbpedia_sub_ and _dbpedia_obj_ can take the value "Not Found"
 
-* I would like to add the Wikidata QID for each subject and object
+* Wikidata QIDs were also added but with the same stipulations as DBpedia above
