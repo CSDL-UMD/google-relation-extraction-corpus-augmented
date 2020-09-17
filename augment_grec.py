@@ -65,7 +65,7 @@ def arg_parse(arg_list=None):
         '--google-kg',
         '-gkg',
         dest='google_kg',
-        help='Replace Freebase IDs for subject and object with string from Google KG API ',
+        help='Supplement Freebase IDs for subject and object with string from Google KG API ',
         action='store_true',
         default=False
     )
@@ -92,9 +92,9 @@ def arg_parse(arg_list=None):
         '--in-dir',
         '-id',
         dest='source_dir',
-        help='Input Directory Path, default ./',
+        help='Input Directory Path, default ./grec',
         type=str,
-        default='./'
+        default='./grec'
     )
     # Save Directory
     parser.add_argument(
