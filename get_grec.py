@@ -24,6 +24,9 @@ def download_file(url, destination):
     destination += pathlib.Path(url).name
     save_response_content(response, destination)
 
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)    
+
 for url in GREC_URLS:
     print(f"Downloading {pathlib.Path(url).name} ...")
     download_file(url, DATA_DIR)
