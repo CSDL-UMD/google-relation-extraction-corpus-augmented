@@ -21,7 +21,7 @@ import xml.etree.ElementTree as ET
 
 # Argument parser
 def arg_parse(arg_list=None):
-    now = datetime.datetime.now().strftime("%b-%d-%y")
+    now = datetime.datetime.now().strftime("%y%b%d")
     parser = argparse.ArgumentParser(
         description="Augment Google Relation Corpus")
     # .ndjson -> json
@@ -110,9 +110,9 @@ def arg_parse(arg_list=None):
         '--output',
         '-o',
         dest='output_tag',
-        help='Tag to append to Output Files, default <filename>-augment_MM-DD-YY.json',
+        help='Tag to append to Output Files, default <filename>_augment-YYMMDD.json',
         type=str,
-        default='-augment' + "_" + now
+        default='_augment' + "-" + now
     )
     # Parses and returns args
     if arg_list:
